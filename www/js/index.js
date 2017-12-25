@@ -49,6 +49,7 @@ angular.module('App', [])
 .controller('AppController', function($scope) {
     var vm = this;
     var uart = null;
+    var lcdpcf8574 = null;
     document.addEventListener('deviceready', function() {
         $scope.$apply(function() {
             vm.onDeviceReady();
@@ -110,6 +111,25 @@ angular.module('App', [])
             }, function() {
                 console.log("uart register callback success");
             });
+        });
+        lcdpcf8574 = cordova.plugins.things.lcdpcf8574;
+        lcdpcf8574.open("I2C1", 0x27)//0x3f)
+        .then(function(device) {
+            console.log("lcdpcf8574 open success");
+            device.begin(16, 2, 0);
+            device.setBacklight(true);
+
+            // load custom character to the LCD
+            //var heart = [0b00000, 0b01010, 0b11111, 0b11111, 0b11111, 0b01110, 0b00100, 0b00000];
+            //device.createChar(0, heart);
+
+            device.clear();
+            device.print("Hello,");
+            device.setCursor(0, 1);
+            device.print("Android Things!");
+            //device.write(0); // write :heart: custom character
+        }, function(error) {
+            console.log(error);
         });
     };
 
