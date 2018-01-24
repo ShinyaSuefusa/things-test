@@ -17,7 +17,7 @@
     specific language governing permissions and limitations
     under the License.
 -->
-<html ng-app="App">
+<html lang="ja" ng-app="App">
     <head>
         <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
@@ -28,6 +28,8 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
@@ -35,7 +37,7 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <title>Hello World</title>
     </head>
-    <body ng-controller="AppController as vm">
+    <body ng-controller="AppController as vm" ng-keypress="vm.onKeyPress($event)">
         <div class="app">
             <h1>Apache Cordova</h1>
             <div id="deviceready" class="blink">
@@ -43,10 +45,15 @@
                 <p class="event received">Device is Ready</p>
             </div>
         </div>
-        <div>{{vm.recvData}}
+        <div>{{vm.recvData}}</div>
+        <div>
+            <canvas width="128" height="64" id="src"></canvas>
+            <canvas width="128" height="64" id="dst"></canvas>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/bdffont.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>
